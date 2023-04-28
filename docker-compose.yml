@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5173:5173"
+    # networks:
+    #   - imanzi
+    # command: ["npm", "run", "start"]
+
+# networks:
+#   imanzi:
+#     driver: bridge
