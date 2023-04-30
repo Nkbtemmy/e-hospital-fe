@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import swal from 'sweetalert';
 import axios from 'axios';
 
-function Login() {
+function PatientLoaginActivity() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -11,25 +12,33 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8081/api/auth/login', {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/login`, {
         email,
         password,
       });
-      localStorage.setItem('access-token', response.data.accessToken);
+      localStorage.setItem('access-token', response?.data?.accessToken);
       navigation('/dashboard');
     } catch (err) {
-      setError(err.response.data.message);
+      setError(err.response?.data?.message);
+      swal("Sorry !", error || 'Sorry there is technical problem!', "error",{
+        buttons: false,
+        timer: 3000,
+      });
     }
   };
 
-  useEffect(()=>{
-    if(error){
-      console.log(error)
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'email') {
+      setEmail(value);
+    } else if (name === 'password') {
+      setPassword(value);
     }
-  },[error])
+  };
+
   return (
     <div className="flex justify-center items-center h-screen">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"  onSubmit={handleLogin}>
         <h2 className="text-2xl font-bold mb-4">Login</h2>
         {error && <div className="text-red-500 mb-4">{error}</div>}
         <div className="mb-4">
@@ -40,9 +49,10 @@ function Login() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="email"
             type="email"
+            name="email"
             placeholder="Email"
+             onChange={handleChange} 
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="mb-6">
@@ -53,16 +63,17 @@ function Login() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             type="password"
+            name='password'
             placeholder="********"
+             onChange={handleChange} 
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="flex items-center justify-between">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="button"
-            onClick={handleLogin}
+            type="submit"
+            // onClick={handleLogin}
           >
             Sign In
           </button>
@@ -78,4 +89,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default PatientLoaginActivity;
