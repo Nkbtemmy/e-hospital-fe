@@ -44,14 +44,16 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { sideNavs } from '../../helpers/navs';
 // import logo from 'assets/images/logo.svg';
-// import minLogo from 'assets/images/minLogo.svg';
+import { useNavigate } from 'react-router-dom';
 import { useWindow } from '../../../contexts/WindowContext';
 
 const SideNav = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isLargeDevice } = useWindow();
   const handleLogout = () => {
     localStorage.removeItem('access-token');
+    navigate('/');
   };
   return (
     <div className="flex flex-col justify-between scrollbar min-h-screen max-h-screen top-0 sticky overflow-y-auto max-w-[16.666667%] bg-brand-black text-brand-gray w-full overflow-hidden bg-gray-800 text-white">

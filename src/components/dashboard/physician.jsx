@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminScaffold from './widgets/AdminScaffold';
 import axios from 'axios';
+import CsvDownloadButton from './helpers/Downloader';
 
 function PhysicianDashboard() {
     const navigate = useNavigate();
@@ -20,7 +21,10 @@ function PhysicianDashboard() {
     }, []);
   return (
     <AdminScaffold >
-      <h2 className=' text-2xl font-bold '>User's List</h2>
+      <h2 className=' text-2xl font-bold '>Physicians List</h2>
+      <div className="flex justify-end">
+          <CsvDownloadButton data={users} className="ml-auto" />
+      </div>
       <div className="flex flex-col mt-8 w-full bg-red-200">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
