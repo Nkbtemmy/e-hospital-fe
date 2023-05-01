@@ -17,7 +17,7 @@ function PhysicianLogin() {
         email,
         password,
       });
-      localStorage.setItem('access-token', response?.data?.accessToken);
+      localStorage.setItem('access-token', response?.data?.obj?.token);
       navigation('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message);
