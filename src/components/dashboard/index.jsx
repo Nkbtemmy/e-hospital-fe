@@ -5,48 +5,19 @@ import axios from 'axios';
 
 function Dashboard() {
     const navigate = useNavigate();
-    
+    const baseUrl = import.meta.env.VITE_API_URL
     useEffect(() => {
       const accessToken = localStorage.getItem('access-token');
       if (!accessToken) {
         navigate('/');
       }
     }, []);
-    const [users, setUsers] = useState([
-      {
-        id: 1,
-        name: 'John',
-        role: 'Doe',
-        email: 'john.doe@example.com',
-        phone: '+1-202-555-0167',
-      },
-      {
-        id: 2,
-        name: 'Jane',
-        role: 'Doe',
-        email: 'jane.doe@example.com',
-        phone: '+1-202-555-0168',
-      },
-      {
-        id: 3,
-        name: 'Bob',
-        role: 'Smith',
-        email: 'bob.smith@example.com',
-        phone: '+1-202-555-0169',
-      }
-    ]);
-
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
-      axios.get('http://localhost:8081/api/users')
-        .then(response => {
-          setUsers(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      axios.get(`${baseUrl}/api/users`)
+        .then(response => setUsers(response?.data?.data))
     }, []);
-
   return (
     <AdminScaffold >
       <h2 className=' text-2xl font-bold '>User's List</h2>
@@ -69,25 +40,27 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {users.map(user => (
-                    <tr key={user.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">{user.name}</div>
-                            <div className="text-sm text-gray-500">{user.username}</div>
+                  {users.map((user, index) => (
+                    <React.Fragment key={index}>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="ml-4">
+                              <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                              <div className="text-sm text-gray-500">{user.username}</div>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{user.email}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                          {user.role}
-                        </span>
-                      </td>
-                    </tr>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">{user.email}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            {user.role}
+                          </span>
+                        </td>
+                      </tr>
+                    </React.Fragment>
                   ))}
                 </tbody>
               </table>
