@@ -1,65 +1,80 @@
 import React, { useState, useEffect } from 'react';
-import { Router, Route, Routes, NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-// Components for dashboard options
-import Profile from '../patient/PatientLoaginActivity';
-import Patients from '../patient/PatientLoaginActivity';
-import Pharmacists from '../patient/PatientLoaginActivity';
-import ProfilePage from '../profiles/patient';
+import AdminScaffold from './widgets/AdminScaffold';
+import axios from 'axios';
+import CsvDownloadButton from './helpers/Downloader';
 
-function Dashboard({ user={
-    photo:"html.phone"
-} }) {
+function Dashboard() {
     const navigate = useNavigate();
+    const baseUrl = import.meta.env.VITE_API_URL
     useEffect(() => {
       const accessToken = localStorage.getItem('access-token');
       if (!accessToken) {
         navigate('/');
       }
     }, []);
+    const [users, setUsers] = useState([]);
 
-  return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <aside className="w-64 bg-gray-800 text-white">
-        <div className="flex flex-col h-screen justify-between">
-          <div className="flex items-center py-4 px-8">
-            {/* User photo */}
-            <img className="h-8 w-8 rounded-full" src={user.photo} alt={user.name} />
-            {/* User name */}
-            <h3 className="ml-2 text-lg">{user.name}</h3>
-          </div>
-          {/* Navigation links */}
-          <nav className="flex flex-col space-y-4">
-            <NavLink exact to="/" className="py-2 px-8 bg-gray-900 text-white" activeClassName="bg-gray-700">
-              Profile
-            </NavLink>
-            <NavLink to="/patients" className="py-2 px-8 bg-gray-900 text-white" activeClassName="bg-gray-700">
-              Patients
-            </NavLink>
-            <NavLink to="/pharmacists" className="py-2 px-8 bg-gray-900 text-white" activeClassName="bg-gray-700">
-              Pharmacists
-            </NavLink>
-          </nav>
-          {/* Logout button */}
-          <div className="py-4 px-8">
-            <button className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded w-full">
-              Logout
-            </button>
-          </div>
-        </div>
-      </aside>
+    useEffect(() => {
+      axios.get(`${baseUrl}/api/users`)
+        .then(response => setUsers(response?.data?.data))
+    }, []);
 
-      {/* Main content */}
-      <main className="flex-1 p-8 bg-gray-100">
-            <Routes>
-                <Route path="/" element={<ProfilePage />} />
-                {/* <Route path="/patients/login" element={<Profile />} />
-                <Route path="/patients/signup" element={<Profile />} /> */}
-            </Routes>
-      </main>
-    </div>
-  );
+    return (
+        <AdminScaffold >
+            <h2 className=' text-2xl font-bold '>User's List</h2>
+            <div className="flex justify-end">
+                <CsvDownloadButton data={users} className="ml-auto" />
+            </div>
+            <div className="flex flex-col mt-8 w-full bg-red-200">
+                <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                        <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                            <table className="min-w-full divide-y divide-gray-200">
+                                <thead className="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Name
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Email
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Role
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                    {users.map((user, index) => (
+                                        <React.Fragment key={index}>
+                                            <tr>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <div className="flex items-center">
+                                                        <div className="ml-4">
+                                                            <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                                                            <div className="text-sm text-gray-500">{user.username}</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <div className="text-sm text-gray-900">{user.email}</div>
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                        {user.role}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </React.Fragment>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </AdminScaffold>
+    );
 }
 
 export default Dashboard;

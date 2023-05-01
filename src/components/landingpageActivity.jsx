@@ -14,7 +14,7 @@ function LandingPage() {
             <Link to="/patients/login" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
               Login
             </Link>
-            <Link to="/patients/signup" className="ml-4 border border-blue-500 text-blue-500 py-2 px-4 rounded hover:bg-blue-500 hover:text-white">
+            <Link to="/signup" className="ml-4 border border-blue-500 text-blue-500 py-2 px-4 rounded hover:bg-blue-500 hover:text-white">
               Signup
             </Link>
           </div>
@@ -26,7 +26,7 @@ function LandingPage() {
             <Link to="/physicians/login" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
               Login
             </Link>
-            <Link to="/physicians/signup" className="ml-4 border border-blue-500 text-blue-500 py-2 px-4 rounded hover:bg-blue-500 hover:text-white">
+            <Link to="/signup" className="ml-4 border border-blue-500 text-blue-500 py-2 px-4 rounded hover:bg-blue-500 hover:text-white">
               Signup
             </Link>
           </div>
@@ -38,7 +38,7 @@ function LandingPage() {
             <Link to="/pharmacists/login" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
               Login
             </Link>
-            <Link to="/pharmacists/signup" className="ml-4 border border-blue-500 text-blue-500 py-2 px-4 rounded hover:bg-blue-500 hover:text-white">
+            <Link to="/signup" className="ml-4 border border-blue-500 text-blue-500 py-2 px-4 rounded hover:bg-blue-500 hover:text-white">
               Signup
             </Link>
           </div>

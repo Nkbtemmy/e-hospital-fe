@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import axios from 'axios';
 
-function PatientLoaginActivity() {
+function PharmacistLogin() {
   const baseUrl = import.meta.env.VITE_API_URL
-  const [username, setUsername] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigation = useNavigate();
@@ -13,8 +13,8 @@ function PatientLoaginActivity() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${baseUrl}/api/auth/login/patients`, {
-        username,
+      const response = await axios.post(`${baseUrl}/api/auth/login/pharmacists`, {
+        phoneNumber,
         password,
       });
       localStorage.setItem('access-token', response?.data?.obj?.token);
@@ -30,8 +30,8 @@ function PatientLoaginActivity() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'username') {
-      setUsername(value);
+    if (name === 'phoneNumber') {
+      setPhoneNumber(value);
     } else if (name === 'password') {
       setPassword(value);
     }
@@ -39,20 +39,20 @@ function PatientLoaginActivity() {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <form className=" bg-slate-200 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-1/4"  onSubmit={handleLogin}>
+      <form className=" bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-1/4"  onSubmit={handleLogin}>
         <h2 className="text-2xl font-bold mb-4">Login</h2>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
-            Username
+            Phone Number
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="username"
+            id="phoneNumber"
             type="text"
-            name="username"
-            placeholder="Username"
+            name="phoneNumber"
+            placeholder="phoneNumber"
             onChange={handleChange} 
-            value={username}
+            value={phoneNumber}
           />
         </div>
         <div className="mb-6">
@@ -89,4 +89,4 @@ function PatientLoaginActivity() {
   );
 }
 
-export default PatientLoaginActivity;
+export default PharmacistLogin;
