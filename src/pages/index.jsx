@@ -4,11 +4,13 @@ import {
    } from "react-router-dom";
 import LandingPage from './../components/landingpageActivity';
 import Dashboard from './../components/dashboard';
-
 import PatientLoginPage from './patient';
 import PharmacistLoginPage from './pharmacist';
 import PhysicianLoginPage from './physician';
 import SignupPage from './signup';
+import PatientDashboard from '../components/dashboard/patients';
+import PharmacistDashboard from '../components/dashboard/pharmacist';
+import PhysicianDashboard from '../components/dashboard/physician';
 
 
    function App() {
@@ -22,6 +24,9 @@ import SignupPage from './signup';
                 <Route path="/patients/login" element={<PatientLoginPage />} />
                 <Route path="/physicians/login" element={<PhysicianLoginPage />} />
                 <Route path="/pharmacists/login" element={<PharmacistLoginPage />} />
+                <Route path="/dashboard/pharmacists" element={<PharmacistDashboard />} />
+                <Route path="/dashboard/physicians" element={<PhysicianDashboard />} />
+                <Route path="/dashboard/patients" element={<PatientDashboard />} />
            </Routes>
         </Router>
       </>
