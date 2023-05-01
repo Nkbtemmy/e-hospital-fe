@@ -18,7 +18,7 @@ COPY . /code
 
 # EXPOSE 3000
 # RUN yarn build
-
+ENV VITE_API_URL=https://e-hospital-gateway.onrender.com
 # CMD ["npm", "run", "dev", "--host"]
 # Build the application
 RUN yarn build

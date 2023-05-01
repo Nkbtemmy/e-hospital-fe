@@ -24,4 +24,4 @@ services:
       - .:/code/src
       - /code/node_modules
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
