@@ -6,12 +6,12 @@ import axios from 'axios';
 function Dashboard() {
     const navigate = useNavigate();
     
-    // useEffect(() => {
-    //   const accessToken = localStorage.getItem('access-token');
-    //   if (!accessToken) {
-    //     navigate('/');
-    //   }
-    // }, []);
+    useEffect(() => {
+      const accessToken = localStorage.getItem('access-token');
+      if (!accessToken) {
+        navigate('/');
+      }
+    }, []);
     const [users, setUsers] = useState([
       {
         id: 1,

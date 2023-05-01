@@ -4,7 +4,7 @@ import swal from 'sweetalert';
 import axios from 'axios';
 
 function SignupActivity() {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL
+  const baseUrl = import.meta.env.VITE_API_URL
   const [formData, setFormData] = useState({
     name: '',
     gender: '',
@@ -19,8 +19,6 @@ function SignupActivity() {
 
   const navigation = useNavigate();
 
-
-
   const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prevState => ({ ...prevState, [name]: value }));
@@ -33,7 +31,7 @@ function SignupActivity() {
       await axios.post(`${baseUrl}/api/auth/register`, {
           ...formData
       });
-      navigation('/login');
+      navigation('/');
     } catch (err) {
       setError(err.response?.data?.message);
       swal("Sorry !", error || 'Sorry there is technical problem!', "error",{
