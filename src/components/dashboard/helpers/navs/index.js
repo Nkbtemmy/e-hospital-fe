@@ -18,12 +18,12 @@ export const sideNavs = [
   },
   {
     icon: OverviewIcon,
-    label: 'Users',
-    to: '/dashboard',
+    label: 'Physician',
+    to: '/dashboard/physicians',
   },
   {
     icon: OverviewIcon,
-    label: 'Physician',
-    to: '/dashboard/physicians',
+    label: 'Users',
+    to: '/dashboard',
   },
 ];

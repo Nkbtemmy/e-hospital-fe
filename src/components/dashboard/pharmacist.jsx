@@ -15,7 +15,7 @@ function PharmacistDashboard() {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-      axios.get(`${baseUrl}/api/users`)
+      axios.get(`${baseUrl}/api/users/pharmacists`)
         .then(response => setUsers(response?.data?.data))
     }, []);
   return (

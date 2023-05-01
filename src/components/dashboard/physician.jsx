@@ -15,7 +15,7 @@ function PhysicianDashboard() {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-      axios.get(`${baseUrl}/api/users`)
+      axios.get(`${baseUrl}/api/users/physicians`)
         .then(response => setUsers(response?.data?.data))
     }, []);
   return (
